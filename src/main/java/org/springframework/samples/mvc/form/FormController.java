@@ -1,5 +1,6 @@
 package org.springframework.samples.mvc.form;
 
+import javax.enterprise.context.RequestScoped;
 import javax.validation.Valid;
 
 import org.springframework.mvc.extensions.ajax.AjaxUtils;
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@Controller
+@RequestScoped
+@Controller //needed due to hardcoded annotation-check in RequestMappingHandlerMapping#isHandler
 @RequestMapping("/form")
 @SessionAttributes("formBean")
 public class FormController {

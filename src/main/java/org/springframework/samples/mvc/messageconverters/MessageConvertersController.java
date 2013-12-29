@@ -1,5 +1,6 @@
 package org.springframework.samples.mvc.messageconverters;
 
+import javax.enterprise.context.RequestScoped;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpHeaders;
@@ -18,7 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.sun.syndication.feed.atom.Feed;
 import com.sun.syndication.feed.rss.Channel;
 
-@Controller
+@RequestScoped
+@Controller //needed due to hardcoded annotation-check in RequestMappingHandlerMapping#isHandler
 @RequestMapping("/messageconverters")
 public class MessageConvertersController {
 

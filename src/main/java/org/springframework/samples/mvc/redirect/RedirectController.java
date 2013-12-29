@@ -1,8 +1,11 @@
 package org.springframework.samples.mvc.redirect;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
+import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.joda.time.LocalDate;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,16 +16,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@Controller
+@RequestScoped
+@Controller //needed due to hardcoded annotation-check in RequestMappingHandlerMapping#isHandler
 @RequestMapping("/redirect")
 public class RedirectController {
-	
-	private final ConversionService conversionService;
 
-	@Inject
-	public RedirectController(ConversionService conversionService) {
-		this.conversionService = conversionService;
-	}
+    @Inject
+    private ApplicationContext applicationContext;
 
 	@RequestMapping(value="/uriTemplate", method=RequestMethod.GET)
 	public String uriTemplate(RedirectAttributes redirectAttrs) {
@@ -33,7 +33,7 @@ public class RedirectController {
 
 	@RequestMapping(value="/uriComponentsBuilder", method=RequestMethod.GET)
 	public String uriComponentsBuilder() {
-		String date = this.conversionService.convert(new LocalDate(2011, 12, 31), String.class);
+		String date = this.applicationContext.getBean(ConversionService.class).convert(new LocalDate(2011, 12, 31), String.class);
 		UriComponents redirectUri = UriComponentsBuilder.fromPath("/redirect/{account}").queryParam("date", date)
 				.build().expand("a123").encode();
 		return "redirect:" + redirectUri.toUriString();

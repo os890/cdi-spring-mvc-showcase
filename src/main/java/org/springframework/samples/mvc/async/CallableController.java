@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.async.WebAsyncTask;
 
-@Controller
+import javax.enterprise.context.RequestScoped;
+
+@RequestScoped
+@Controller //needed due to hardcoded annotation-check in RequestMappingHandlerMapping#isHandler
 @RequestMapping("/async/callable")
 public class CallableController {
 

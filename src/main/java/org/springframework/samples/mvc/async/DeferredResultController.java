@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+import javax.enterprise.context.RequestScoped;
+
+@RequestScoped
+@Controller //needed due to hardcoded annotation-check in RequestMappingHandlerMapping#isHandler
 @RequestMapping("/async")
 public class DeferredResultController {
 
